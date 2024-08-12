@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.examsys.oes.mapper.AdminMapper">
+
+    <!-- 查询所有管理员 -->
+    <select id="findAll" resultType="com.examsys.oes.entity.Admin">
+        select adminName,sex,tel,email,cardId,role from "admin"
+    </select>
+
+    <!-- 根据ID查询管理员 -->
+    <select id="findById" parameterType="int" resultType="com.examsys.oes.entity.Admin">
+        select adminId,adminName,sex,tel,email,cardId,role,pwd from"admin" where adminId = #{adminId}
+    </select>
+
+    <!-- 删除管理员 -->
+    <delete id="deleteById" parameterType="int">
+        delete from "admin" where adminId = #{adminId}
+    </delete>
+
+    <!-- 更新管理员信息 -->
+    <update id="update" parameterType="com.examsys.oes.entity.Admin">
+        update "admin" set adminName = #{adminName},sex = #{sex},
+        tel = #{tel}, email = #{email},pwd = #{pwd},cardId = #{cardId},role = #{role}
+        where adminId = #{adminId}
+    </update>
+
+    <!-- 插入管理员信息 -->
+    <insert id="add" parameterType="com.examsys.oes.entity.Admin" useGeneratedKeys="true" keyProperty="adminId">
+        insert into "admin"(adminName,sex,tel,email,pwd,cardId,role)
+        values(#{adminName},#{sex},#{tel},#{email},#{pwd},#{cardId},#{role})
+    </insert>
+
+</mapper>

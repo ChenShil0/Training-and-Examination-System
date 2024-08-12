@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.examsys.oes.mapper.AnswerMapper">
+
+    <!-- 查询所有问题，包括选择题、判断题和填空题 -->
+    <select id="findAll" resultType="com.examsys.oes.vo.AnswerVO">
+        SELECT questionId, question, subject, score, chapter, level, '选择题' AS type
+        FROM "multi_question"
+        WHERE question LIKE CONCAT('%', #{question}, '%')
+          AND subject LIKE CONCAT('%', #{subject}, '%')
+          AND chapter LIKE CONCAT('%', #{section}, '%')
+        UNION
+        SELECT questionId, question, subject, score, chapter, level, '判断题' AS type
+        FROM "judge_question"
+        WHERE question LIKE CONCAT('%', #{question}, '%')
+          AND subject LIKE CONCAT('%', #{subject}, '%')
+          AND chapter LIKE CONCAT('%', #{section}, '%')
+        UNION
+        SELECT questionId, question, subject, score, chapter, level, '填空题' AS type
+        FROM "fill_question"
+        WHERE question LIKE CONCAT('%', #{question}, '%')
+          AND subject LIKE CONCAT('%', #{subject}, '%')
+          AND chapter LIKE CONCAT('%', #{section}, '%')
+    </select>
+
+    <!-- 根据ID查询多选题详细信息 -->
+    <select id="findMultiQuestionById" resultType="com.examsys.oes.entity.MultiQuestion">
+        SELECT questionId, subject, question, answerA, answerB, answerC, answerD, rightAnswer, section, level, analysis
+        FROM "multi_question"
+        WHERE questionId = #{questionId}
+    </select>
+
+    <!-- 根据ID查询填空题详细信息 -->
+    <select id="findFillQuestionById" resultType="com.examsys.oes.entity.FillQuestion">
+        SELECT questionId, subject, question, answer, analysis, level, chapter
+        FROM "fill_question"
+        WHERE questionId = #{questionId}
+    </select>
+
+    <!-- 根据ID查询判断题详细信息 -->
+    <select id="findJudgeQuestionById" resultType="com.examsys.oes.entity.JudgeQuestion">
+        SELECT questionId, subject, question, answer, analysis, level, chapter
+        FROM "judge_question"
+        WHERE questionId = #{questionId}
+    </select>
+
+</mapper>

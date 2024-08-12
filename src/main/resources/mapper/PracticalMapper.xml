@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.examsys.oes.mapper.PracticalMapper">
+
+    <select id="findAll" resultType="com.examsys.oes.entity.Practical">
+        SELECT * FROM "practical"
+    </select>
+
+    <select id="findAlls" resultType="com.examsys.oes.entity.Practical">
+        SELECT source FROM "practical"
+    </select>
+
+    <select id="findById" resultType="com.examsys.oes.entity.Practical">
+        SELECT * FROM "practical" WHERE practicalCode = #{practicalCode}
+    </select>
+
+    <delete id="delete">
+        DELETE FROM "practical" WHERE practicalCode = #{practicalCode}
+    </delete>
+
+    <update id="update">
+        UPDATE "practical"
+        SET description = #{description}, source = #{source}, trainingId = #{trainingId},
+            startDate = #{startDate}, endDate = #{endDate}, grade = #{grade}, term = #{term},
+            major = #{major}, institute = #{institute}, totalScore = #{totalScore},
+            type = #{type}, tips = #{tips}
+        WHERE practicalCode = #{practicalCode}
+    </update>
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="practicalCode">
+        INSERT INTO "practical"(description, source, trainingId, startDate, endDate, grade, term, major, institute, totalScore, type, tips)
+        VALUES (#{description}, #{source}, #{trainingId}, #{startDate}, #{endDate}, #{grade}, #{term}, #{major}, #{institute}, #{totalScore}, #{type}, #{tips})
+    </insert>
+
+    <select id="findOnlyTraingingId" resultType="com.examsys.oes.entity.Practical">
+        SELECT trainingId FROM "practical" ORDER BY trainingId DESC LIMIT 1
+    </select>
+
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.examsys.oes.mapper.ScoreMapper">
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="scoreId">
+        INSERT INTO "score" (examCode, studentId, subject, ptScore, etScore, score, answerDate)
+        VALUES (#{examCode}, #{studentId}, #{subject}, #{ptScore}, #{etScore}, #{score}, #{answerDate})
+    </insert>
+
+    <select id="findAll" resultType="com.examsys.oes.entity.Score">
+        SELECT scoreId, examCode, studentId, subject, ptScore, etScore, score, answerDate
+        FROM "score"
+        ORDER BY scoreId DESC
+    </select>
+
+    <select id="findById" resultType="com.examsys.oes.entity.Score">
+        SELECT scoreId, examCode, studentId, subject, ptScore, etScore, score, answerDate
+        FROM "score"
+        WHERE studentId = #{studentId}
+        ORDER BY scoreId ASC
+    </select>
+
+    <select id="findByExamCode" resultType="com.examsys.oes.entity.Score">
+        SELECT * FROM "score" WHERE examCode = #{examCode}
+    </select>
+
+    <select id="findByExamname" resultType="com.examsys.oes.entity.Score">
+        SELECT * FROM "score" WHERE subject = #{examname}
+    </select>
+
+</mapper>

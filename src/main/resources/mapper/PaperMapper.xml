@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.examsys.oes.mapper.PaperMapper">
+
+    <select id="findAll" resultType="com.examsys.oes.entity.PaperManage">
+        SELECT paperId, questionType, questionId FROM "paper_manage"
+    </select>
+
+    <select id="findById" resultType="com.examsys.oes.entity.PaperManage">
+        SELECT paperId, questionType, questionId FROM "paper_manage" WHERE paperId = #{paperId}
+    </select>
+
+    <insert id="add">
+        INSERT INTO "paper_manage" (paperId, questionType, questionId)
+        VALUES (#{paperId}, #{questionType}, #{questionId})
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM "paper_manage" WHERE paperId = #{paperId} AND questionType = #{type} AND questionId = #{questionId}
+    </delete>
+
+    <delete id="deleteByPaperId">
+        DELETE FROM "paper_manage" WHERE paperId = #{paperId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.examsys.oes.mapper.StudentMapper">
+
+    <!-- 分页查询所有学生信息 -->
+    <select id="findAll" resultType="com.examsys.oes.entity.Student">
+        SELECT * FROM "student"
+        WHERE studentName LIKE CONCAT('%', #{name}, '%')
+          AND grade LIKE CONCAT('%', #{grade}, '%')
+          AND tel LIKE CONCAT('%', #{tel}, '%')
+          AND major LIKE CONCAT('%', #{major}, '%')
+          AND institute LIKE CONCAT('%', #{institute}, '%')
+          AND clazz LIKE CONCAT('%', #{clazz}, '%')
+    </select>
+
+    <!-- 根据学生ID查询学生信息 -->
+    <select id="findById" resultType="com.examsys.oes.entity.Student">
+        SELECT * FROM "student" WHERE studentId = #{studentId}
+    </select>
+
+    <!-- 根据学生ID删除学生信息 -->
+    <delete id="deleteById">
+        DELETE FROM "student" WHERE studentId = #{studentId}
+    </delete>
+
+    <!-- 更新学生信息 -->
+    <update id="update">
+        UPDATE "student"
+        SET studentName = #{studentName}, grade = #{grade}, major = #{major}, clazz = #{clazz},
+            institute = #{institute}, tel = #{tel}, email = #{email}, pwd = #{pwd}, cardId = #{cardId}, sex = #{sex}, role = #{role}
+        WHERE studentId = #{studentId}
+    </update>
+
+    <!-- 更新学生的错题本 -->
+    <update id="updatewrong">
+        UPDATE "student"
+        SET wrongmulti = CASE WHEN wrongmulti IS NULL THEN #{wrongmulti} ELSE CONCAT_WS(',', wrongmulti, #{wrongmulti}) END,
+            wrongjudge = CASE WHEN wrongjudge IS NULL THEN #{wrongjudge} ELSE CONCAT_WS(',', wrongjudge, #{wrongjudge}) END,
+            wrongfill = CASE WHEN wrongfill IS NULL THEN #{wrongfill} ELSE CONCAT_WS(',', wrongfill, #{wrongfill}) END
+        WHERE studentId = #{studentId}
+    </update>
+
+    <!-- 更新学生密码 -->
+    <update id="updatePwd">
+        UPDATE "student" SET pwd = #{pwd} WHERE studentId = #{studentId}
+    </update>
+
+    <!-- 添加学生信息 -->
+    <insert id="add" useGeneratedKeys="true" keyProperty="studentId">
+        INSERT INTO "student" (studentName, grade, major, clazz, institute, tel, email, pwd, cardId, sex, role)
+        VALUES (#{studentName}, #{grade}, #{major}, #{clazz}, #{institute}, #{tel}, #{email}, #{pwd}, #{cardId}, #{sex}, #{role})
+    </insert>
+
+</mapper>

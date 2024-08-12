@@ -1,0 +1,24 @@
+package com.examsys.oes.mapper;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.examsys.oes.entity.Message;
+import org.apache.ibatis.annotations.*;
+
+@Mapper
+public interface MessageMapper {
+
+    IPage<Message> findAll(Page page);
+
+
+    Message findById(Integer id);
+
+
+    int delete(Integer id);
+
+
+    int update(Message message);
+
+
+    int add(Message message);
+}

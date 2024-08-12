@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.examsys.oes.mapper.TrainMapper">
+
+    <!-- 查询所有培训信息 -->
+    <select id="findAll" resultType="com.examsys.oes.entity.Train">
+        SELECT * FROM "train"
+    </select>
+
+    <!-- 根据培训ID查询培训信息 -->
+    <select id="findById" resultType="com.examsys.oes.entity.Train">
+        SELECT * FROM "train" WHERE trainingId = #{trainingId}
+    </select>
+
+    <!-- 添加培训信息 -->
+    <insert id="add">
+        INSERT INTO "train" (id, trainingId, title)
+        VALUES (#{id}, #{trainingId}, #{title})
+    </insert>
+
+    <!-- 根据培训ID和ID删除培训信息 -->
+    <delete id="delete">
+        DELETE FROM "train" WHERE trainingId = #{trainingId} AND id = #{id}
+    </delete>
+
+    <!-- 根据培训ID删除所有相关培训信息 -->
+    <delete id="deleteByTrainingId">
+        DELETE FROM "train" WHERE trainingId = #{trainingId}
+    </delete>
+
+    <!-- 更新培训信息 -->
+    <update id="edit">
+        UPDATE "train" SET title = #{title} WHERE id = #{id}
+    </update>
+
+</mapper>

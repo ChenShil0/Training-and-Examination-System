@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.examsys.oes.mapper.ExamManageMapper">
+
+    <!-- 查询所有考试管理信息 -->
+    <select id="findAll" resultType="com.examsys.oes.entity.ExamManage">
+        SELECT * FROM "exam_manage"
+    </select>
+
+    <!-- 查询所有考试来源 -->
+    <select id="findAlls" resultType="com.examsys.oes.entity.ExamManage">
+        SELECT source FROM "exam_manage"
+    </select>
+
+    <!-- 根据考试代码查询考试管理信息 -->
+    <select id="findById" resultType="com.examsys.oes.entity.ExamManage">
+        SELECT * FROM "exam_manage" WHERE examCode = #{examCode}
+    </select>
+
+    <!-- 根据考试代码删除考试管理信息 -->
+    <delete id="delete">
+        DELETE FROM "exam_manage" WHERE examCode = #{examCode}
+    </delete>
+
+    <!-- 更新考试管理信息 -->
+    <update id="update">
+        UPDATE "exam_manage"
+        SET description = #{description}, source = #{source}, paperId = #{paperId},
+            examDate = #{examDate}, totalTime = #{totalTime}, grade = #{grade}, term = #{term},
+            major = #{major}, institute = #{institute}, totalScore = #{totalScore},
+            type = #{type}, tips = #{tips}
+        WHERE examCode = #{examCode}
+    </update>
+
+    <!-- 添加考试管理信息 -->
+    <insert id="add" useGeneratedKeys="true" keyProperty="examCode">
+        INSERT INTO "exam_manage" (description, source, paperId, examDate, totalTime, grade, term, major, institute, totalScore, type, tips)
+        VALUES (#{description}, #{source}, #{paperId}, #{examDate}, #{totalTime}, #{grade}, #{term}, #{major}, #{institute}, #{totalScore}, #{type}, #{tips})
+    </insert>
+
+    <!-- 查询最后一条记录的paperId -->
+    <select id="findOnlyPaperId" resultType="com.examsys.oes.entity.ExamManage">
+        SELECT paperId FROM "exam_manage" ORDER BY paperId DESC LIMIT 1
+    </select>
+
+</mapper>

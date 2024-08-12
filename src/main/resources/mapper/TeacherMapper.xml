@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.examsys.oes.mapper.TeacherMapper">
+
+    <!-- 分页查询 -->
+    <select id="findAll" resultType="com.examsys.oes.entity.Teacher">
+        select * from "teacher"
+    </select>
+
+    <!-- 注意：对于分页查询，你通常会使用MyBatis-Plus的PageHelper插件或类似的分页插件，
+         而不是直接在XML中处理分页参数。这里我假设你已经有了分页插件的配置。
+         如果你需要在这里处理分页，你可能需要自定义一个拦截器或插件来解析Page对象。
+         但在这里，我们仅提供一个基本的查询示例。
+    -->
+
+    <!-- 根据ID查询 -->
+    <select id="findById" resultType="com.examsys.oes.entity.Teacher">
+        select * from "teacher" where teacherId = #{teacherId}
+    </select>
+
+    <!-- 删除操作 -->
+    <delete id="deleteById">
+        delete from "teacher" where teacherId = #{teacherId}
+    </delete>
+
+    <!-- 更新操作 -->
+    <update id="update">
+        update "teacher" set teacherName = #{teacherName},sex = #{sex},
+                           tel = #{tel}, email = #{email},pwd = #{pwd},cardId = #{cardId},
+                           role = #{role},institute = #{institute},type = #{type}
+        where teacherId = #{teacherId}
+    </update>
+
+    <!-- 插入操作 -->
+    <insert id="add" useGeneratedKeys="true" keyProperty="teacherId">
+        insert into "teacher"(teacherName,sex,tel,email,pwd,cardId,role,type,institute)
+        values(#{teacherName},#{sex},#{tel},#{email},#{pwd},#{cardId},#{role},#{type},#{institute})
+    </insert>
+
+</mapper>
